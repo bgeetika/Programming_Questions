@@ -1,0 +1,46 @@
+import random
+class Solution:
+    # @param {integer[]} nums
+    # @return {integer}
+    
+    def swap(self, nums, i, j):
+        temp = nums[i]
+        nums[i] = nums[j]
+        nums[j] = temp
+    
+    def partition(self, nums, start, end):
+        #print start,end
+       
+        if start < end:
+            pivot = nums[random.randrange(start, end)]
+        i = start - 1
+        while start < end:
+            if nums[start] > pivot:
+                i = i + 1
+                self.swap(nums,start, i)
+            start = start + 1
+        i = i + 1
+        #self.swap(nums, i, start)
+        #print i
+        return i
+                
+                
+    def k_largest(self, nums,start,end, k):
+        while start <= end:
+            parti = self.partition(nums, start, end)
+            if parti == k-1:
+                    return nums[parti]
+            elif parti > k-1 :
+                end = parti -1
+            else:
+                start = parti + 1
+         
+    def k_largest_Element(self, nums, k):
+        return self.k_largest(nums, 0, len(nums) -1, k)
+                
+            
+            
+    def majorityElement(self, nums):
+        
+        return self.k_largest_Element( nums, (len(nums)+1)/2)
+      
